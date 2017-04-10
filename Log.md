@@ -49,6 +49,8 @@ on openMP parallelization. Play on mxn board.
 22. [A Taxonomy of Game Tree Search Algorithms](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.47.8438&rep=rep1&type=pdf)
 23. [Scalability and Parallelization of Monte-Carlo Tree Search](https://hal.inria.fr/file/index/docid/512854/filename/newcluster.pdf)
 24. [Is parallel programming hard ?](https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook-e1p.pdf)
+25. [An introduction to game tree algorithms](http://www.hamedahmadi.com/gametree/)
+26. [Negamax](https://en.wikipedia.org/wiki/Negamax)
 
 ### OpenMP / MPI & Parallel Programming Techniques
 1. [OpenMP in 30 minutes](http://www.linux-mag.com/id/4609/)
@@ -81,6 +83,8 @@ on openMP parallelization. Play on mxn board.
 6. [Parallel Reversi with MPI](https://github.com/xtrinch/parallel-reversi)
 7. [Negamax implementation in c](https://xojoc.pw/dailyprogrammer/173.c)
 8. [Bitboard for reversi](https://github.com/rcrr/reversi/blob/master/field_research/code/zebra/bitboard.c)
+9. [Reversi in python](https://github.com/LinxiFan/Reversi)
+10. [Negamax with alpha-beta](https://github.com/cymen/node-negamax/blob/master/negamax.c)
 
 ### Basics
 1. [Alpha-beta pruning](https://www.youtube.com/watch?v=xBXHtz4Gbdo)
