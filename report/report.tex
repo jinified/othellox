@@ -1,0 +1,117 @@
+\documentclass[12pt]{article}
+\usepackage{float}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{mathptmx}
+\usepackage[font=scriptsize,labelfont=bf]{caption}
+\graphicspath{{./img/}}
+
+\title{CS3211 Project 2: OthelloX}
+\author{Tan Soon Jin, A0112213E \\ a0112213@u.nus.edu}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\subsection{Problem Description}
+
+Generating best moves given a board positions for the game of Othello / Reversi.
+
+\subsection{Terminologies}
+
+\begin{enumerate}
+  \item Depth: move taken by a player
+\end{enumerate}
+
+\subsection{Minimax algorithm}
+
+\subsection{Evaluation functions}
+
+\begin{enumerate}
+  \item \href{https://skatgame.net/mburo/ps/evalfunc.pdf}{An Evaluation Function for
+  Othello Based on Statistics}
+  \item
+    \href{https://en.wikipedia.org/wiki/Computer_Othello#Evaluation_techniques}{Evaluation
+    Techniques Wikipedia}
+  \item
+    \href{http://www.csse.uwa.edu.au/cig08/Proceedings/papers/8010.pdf}{Temporal
+    Difference (TD) based evaluation function for Othello}
+  \item \href{https://skatgame.net/mburo/ps/improve.pdf}{Multi-ProbCut and New
+      Evaluation Function}
+\end{enumerate}
+
+\begin{enumerate}
+  \item Complexity
+  \item Limitations
+\end{enumerate}
+  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Data Structures \& Algorithms}
+
+\subsection{Storage Techniques}
+
+\subsection{Search algorithm}
+
+\begin{enumerate}
+  \item \href{http://www.aaai.org/Papers/AAAI/1994/AAAI94-210.pdf}{Best-First
+      Minimax Search}
+  \item
+    \href{http://digitalarchive.maastrichtuniversity.nl/fedora/get/guid:36b5cf0a-cf06-4602-afdb-1af04d65c23b/ASSET1}{Searching
+    for Solutions in Games and Intelligence}
+\end{enumerate}
+
+\subsection{Techniques to improve serialized components}
+
+\subsection{Techniques to improve parallelization}
+
+\begin{enumerate}
+  \item \href{https://chessprogramming.wikispaces.com/Shared+Hash+Table}{Shared Hash Table}
+  \item \href{https://chessprogramming.wikispaces.com/ABDADA}{Distributed Alpha-Beta Search with Eldest Son Right}
+  \item \href{https://chessprogramming.wikispaces.com/Lazy+SMP}{Lazy SMP}
+  \item \href{http://www.netlib.org/utk/lsi/pcwLSI/text/node350.html}{Parallel Alpha-Beta}
+  \item
+    \href{https://chessprogramming.wikispaces.com/Principal+Variation+Search}{Principal
+    Variation Search}
+  \item
+    \href{https://chessprogramming.wikispaces.com/Dynamic+Tree+Splitting}{Dynamic
+    Tree Splitting (DTS)}
+  \item
+    \href{https://dke.maastrichtuniversity.nl/m.winands/documents/multithreadedMCTS2.pdf}{Parallel
+    Mont-carlo tree search}
+  \item \href{http://www.lamsade.dauphine.fr/~cazenave/papers/rootparallelggp.pdf}{Parallel General Game Player}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Tabulation of data}
+
+\subsection{Testing scalability of the algorithms}
+
+Scaling is measured using change in nodes per second (NPS). Speedup is measured
+using change in time to depth.
+
+\begin{enumerate}
+  \item Depth of the search {2 - 8}
+  \item Size of board {6x6, 8x10, ..., 26x26}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Discussion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{ieeetran}
+\bibliography{ref}
+\end{document}
