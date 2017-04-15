@@ -20,7 +20,9 @@
 typedef struct boardinfo_ {
     int row;
     int col;
+    int timeout;
     int** bboard;
+    char *player;
 } board_info;
 
 typedef struct evalinfo_ {
@@ -39,7 +41,8 @@ board_info parse_board(char *filename) {
     char line[MAX_CHAR_IN_LINE];
     char white_pos[MAX_POSLIST];
     char black_pos[MAX_POSLIST];
-    int x, y;
+    char *player;
+    int x, y, timeout;
 
     if (file == NULL) {
         perror("Error opening file");
@@ -49,6 +52,8 @@ board_info parse_board(char *filename) {
             sscanf(line, "Size: %d,%d %*s", &x, &y);
             sscanf(line, "White: { %s } %*s", white_pos);
             sscanf(line, "Black: { %s } %*s", black_pos);
+            sscanf(line, "Color: %s %*s", player);
+            sscanf(line, "Timeout: %d %*s", &timeout);
         }
         fclose(file);
     }
@@ -87,6 +92,8 @@ board_info parse_board(char *filename) {
     board_info info;
     info.row = y;
     info.col = x;
+    info.timeout = timeout;
+    info.player = player;
     info.bboard = board;
     return info;
 }

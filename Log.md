@@ -98,6 +98,7 @@ on openMP parallelization. Play on mxn board.
 3. [HPC Toolkit](http://hpctoolkit.org/slides/hpctoolkit-og15.pdf)
 4. [Texas Advanced Computing Centre: Overview of profiling](https://portal.tacc.utexas.edu/documents/13601/1041435/29-Overview_of_Profiling.pdf/84359111-d21a-4618-9d90-ca878c1e37ab)
 5. [Intel VTune Amplifier](https://software.intel.com/en-us/articles/profiling-openmp-applications-with-intel-vtune-amplifier-xe)
+6. Vampir with vtcc compiler wrapper
 
 ### Othello
 1. [Othello wiki](https://chessprogramming.wikispaces.com/Othello)

@@ -1,13 +1,15 @@
-\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Problem Description}{section.1}% 2
-\BOOKMARK [2][-]{subsection.1.2}{Terminologies}{section.1}% 3
-\BOOKMARK [2][-]{subsection.1.3}{Minimax algorithm}{section.1}% 4
-\BOOKMARK [2][-]{subsection.1.4}{Evaluation functions}{section.1}% 5
-\BOOKMARK [1][-]{section.2}{Data Structures \046 Algorithms}{}% 6
-\BOOKMARK [2][-]{subsection.2.1}{Storage Techniques}{section.2}% 7
-\BOOKMARK [2][-]{subsection.2.2}{Search algorithm}{section.2}% 8
-\BOOKMARK [2][-]{subsection.2.3}{Techniques to improve serialized components}{section.2}% 9
-\BOOKMARK [2][-]{subsection.2.4}{Techniques to improve parallelization}{section.2}% 10
-\BOOKMARK [1][-]{section.3}{Tabulation of data}{}% 11
-\BOOKMARK [2][-]{subsection.3.1}{Testing scalability of the algorithms}{section.3}% 12
-\BOOKMARK [1][-]{section.4}{Discussion}{}% 13
+\BOOKMARK [1][-]{section.1}{Research}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{A\040Comparative\040Study\040of\040Game\040Tree\040Searching\040Methods\040elnaggar2014comparative}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Introduction}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Problem\040Description}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Terminologies}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Minimax\040algorithm}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.4}{Evaluation\040functions}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Data\040Structures\040&\040Algorithms}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Storage\040Techniques}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Search\040algorithm}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Techniques\040to\040improve\040serialized\040components}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.4}{Techniques\040to\040improve\040parallelization}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Tabulation\040of\040data}{}% 13
+\BOOKMARK [2][-]{subsection.4.1}{Testing\040scalability\040of\040the\040algorithms}{section.4}% 14
+\BOOKMARK [1][-]{section.5}{Discussion}{}% 15
