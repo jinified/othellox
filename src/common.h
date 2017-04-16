@@ -1,7 +1,8 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include<string>
+#include <string>
+#include <string.h>
 
 enum Side {
     BLACK, WHITE
@@ -30,6 +31,7 @@ class GameInfo {
 
 public:
     int row, col;
+    Side maximizer;
     char *player;
     char *white_pos;
     char *black_pos;
@@ -42,10 +44,11 @@ public:
         this->white_pos = white_pos;
         this->black_pos = black_pos;
         this->timeout = timeout;
+        maximizer = *player == 'W' ? WHITE : BLACK;
     }
 
     void printInfo() {
-        printf("Board size: %d,%d\nPlayer: %s\nWhite Pos: %s\nBlack Pos: %s\nTimeout: %d\n",
+        printf("\n/** GAME INFO **/\nBoard size: %d,%d\nPlayer: %s\nWhite Pos: %s\nBlack Pos: %s\nTimeout: %d\n",
                row, col, player, white_pos, black_pos, timeout);
     }
 };
@@ -65,7 +68,7 @@ public:
     }
 
     void printInfo() {
-        printf("Max depth: %d\nMax nodes: %d\nCorner value: %d\nEdge value: %d\n",
+        printf("\n/** EVAL INFO **/\nMax depth: %d\nMax nodes: %d\nCorner value: %d\nEdge value: %d\n",
                maxDepth, maxNodes, cornerValue, edgeValue);
     }
 };

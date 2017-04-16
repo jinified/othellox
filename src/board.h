@@ -5,11 +5,6 @@
 #include <vector>
 #include <cstddef>
 
-#define CORNER_WEIGHT 50
-#define MOVES_WEIGHT 2 // # moves cur_player - # moves opp_player
-#define DIAGONAL_WEIGHT -10
-#define EDGE_WEIGHT 5
-#define FRONTIER_WEIGHT 2
 #define MAX_BOARD_SIZE 676
 
 using namespace std;
@@ -30,6 +25,14 @@ public:
     int row;
     int col;
     int size;
+
+    // Evaluation function parameters
+    int edge_weight = 5;
+    int corner_weight = 50;
+    int moves_weight =2;
+    int diagonal_weight = -10;
+    int frontier_weight = 2;
+
     Board *copy();
 
     bool isDone();
@@ -37,15 +40,20 @@ public:
     bool checkMove(Move *m, Side side);
     vector<Move> getMoves(Side side);
     void doMove(Move *m, Side side);
-    void printBoard();
+    void setupBoard(char*, char*);
     int count(Side side);
     int countBlack();
     int countWhite();
-    int getScore(Side maximizer);
 
+    // Evaluation functions
+    int getScore(Side maximizer);
     int boolToInt(bool b);
     int getMovesScore(Side maximizer);
     int getFrontierScore(Side maximizer);
+
+    // Visualiztion
+    void printBoard(Side);
+    void visualizeMoves(Side);
 };
 
 #endif

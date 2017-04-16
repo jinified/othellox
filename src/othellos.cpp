@@ -2,8 +2,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <chrono>
 
 #include "common.h"
+#include "board.h"
+#include "gametree.h"
 
 #define MAX_CHAR_IN_LINE 128
 #define MAX_POSLIST 2704
@@ -67,16 +70,57 @@ EvalInfo *parse_evalparams(char *filename) {
     return info;
 }
 
+void simulate(int rounds, Board *board, int depth, int maxDepth, int maxNodes) {
+    // Simulate an othello game using our program for both players
+
+    printf("\nRunning simulation for %d rounds\n", rounds);
+
+    for (int i=0; i < rounds; i++) {
+        Move *bestmove;
+        if (i % 2 == 0) {
+            GameTree *tree = new GameTree(board->copy(), BLACK,
+                                          maxDepth, maxNodes);
+            bestmove = tree->findBestMove(depth, true);
+            board->doMove(bestmove, BLACK);
+        } else {
+            GameTree *tree = new GameTree(board->copy(), WHITE,
+                                          maxDepth, maxNodes);
+            bestmove = tree->findBestMove(depth, true);
+            board->doMove(bestmove, WHITE);
+        }
+    }
+
+    board->printBoard(BLACK);
+}
+
 int main(int argc, char **argv) {
+
     if (argc != 3) {
         usage();
         return EXIT_FAILURE;
     } else {
+        // Start timer
+        auto start = chrono::high_resolution_clock::now(); 
+
         arginfo(argv[1], argv[2]);
+
+        // Parses config files
         GameInfo *game_info = parse_board(argv[1]);
         game_info->printInfo();
         EvalInfo *eval_info = parse_evalparams(argv[2]);
         eval_info->printInfo();
+
+        // Initialize board
+        Board *board = new Board(game_info->row, game_info->col);
+        board->setupBoard(game_info->white_pos, game_info->black_pos);
+
+        // Initializes evaluation parameters
+        board->corner_weight = eval_info->cornerValue;
+        board->edge_weight = eval_info->edgeValue;
+
+        // Initialize simulator
+        simulate(10, board, 5, eval_info->maxDepth, eval_info->maxNodes);
+
     }
     return 0;
 }

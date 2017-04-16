@@ -1,4 +1,5 @@
 #include "board.h"
+#include <string.h>
 
 /*
  * Make a row x col othello board
@@ -78,7 +79,9 @@ vector<Move> Board::getMoves(Side side) {
     for (int i = 0; i < col; i++) {
         for (int j = 0; j < row; j++) {
             Move move(i, j);
-            if (checkMove(&move, side)) movesList.push_back(move);
+            if (checkMove(&move, side)) {
+                movesList.push_back(move);
+            }
         }
     }
     return movesList;
@@ -214,11 +217,11 @@ int Board::getScore(Side maximizer) {
     bool minLRCorner = get(minimizer, col - 1, col - 1);
 
     if (maxULCorner || maxURCorner || maxLLCorner || maxLRCorner) {
-        score += CORNER_WEIGHT * (boolToInt(maxULCorner) + boolToInt(maxURCorner) 
+        score += corner_weight * (boolToInt(maxULCorner) + boolToInt(maxURCorner) 
                                 + boolToInt(maxLLCorner) + boolToInt(maxLRCorner));
     }
     if (minULCorner || minURCorner || minLLCorner || minLRCorner) {
-        score -= CORNER_WEIGHT * (boolToInt(minULCorner) + boolToInt(minURCorner) 
+        score -= corner_weight * (boolToInt(minULCorner) + boolToInt(minURCorner) 
                                 + boolToInt(minLLCorner) + boolToInt(minLRCorner));
     }
 
@@ -230,47 +233,58 @@ int Board::getScore(Side maximizer) {
     bool maxLRDiagonal = get(maximizer, col - 2, row - 2);
 
     if (maxULDiagonal && !minULCorner) {
-        score += DIAGONAL_WEIGHT;
+        score += diagonal_weight;
     }
     if (maxURDiagonal && !minURCorner) {
-        score += DIAGONAL_WEIGHT;
+        score += diagonal_weight;
     }
     if (maxLLDiagonal && !minLLCorner) {
-        score += DIAGONAL_WEIGHT;
+        score += diagonal_weight;
     }
     if (maxLRDiagonal && !minLRCorner) {
-        score += DIAGONAL_WEIGHT;
+        score += diagonal_weight;
     }
 
     // update score using a positive weight for occupied edge positions (edge
     // positions do not include the corners)
     for (int x = 0; x < col; x += col - 1) {
         for (int y = 1; y < row - 1; y++) {
-            score += EDGE_WEIGHT * boolToInt(get(maximizer, x, y));
+            score += edge_weight * boolToInt(get(maximizer, x, y));
         }
     }
     for (int y = 0; y < row; y += row - 1) {
         for (int x = 1; x < col - 1; x++) {
-            score += EDGE_WEIGHT * boolToInt(get(maximizer, x, y));
+            score += edge_weight * boolToInt(get(maximizer, x, y));
         }
     }
 
-    score += MOVES_WEIGHT * getMovesScore(maximizer);
-    score += FRONTIER_WEIGHT * getFrontierScore(maximizer);
+    score += moves_weight * getMovesScore(maximizer);
+    score += frontier_weight * getFrontierScore(maximizer);
 
     return score;
  }
 
 
-void Board::printBoard() {
-    for (int y = 0; y < row; y++) {
-        for (int x = 0; x < col; x++) {
-            printf("%d ", get(BLACK, x, y));
-        }
-        printf("\n");
+void Board::setupBoard(char *white_pos, char *black_pos) {
+    // Sets board given positions for each player
+
+    char *pt = strtok(white_pos, ",");
+    while(pt != NULL) {
+        int x = (*pt - 'a');
+        int y = (*(pt+1) - '0') - 1;
+        taken[x + row * y] = 1;
+        pt = strtok (NULL, ",");
+    }
+
+    pt = strtok(black_pos, ",");
+    while(pt != NULL) {
+        int x = (*pt - 'a');
+        int y = (*(pt+1) - '0') - 1;
+        taken[x + row * y] = 1;
+        black[x + row * y] = 1;
+        pt = strtok (NULL, ",");
     }
 }
-
 
 int Board::boolToInt(bool b) {
     return b ? 1 : 0;
@@ -321,4 +335,26 @@ int Board::getFrontierScore(Side maximizer) {
         }
     }
     return score;
+}
+
+// Visualizations
+
+void Board::printBoard(Side side) {
+    printf("\n");
+    for (int y = 0; y < row; y++) {
+        for (int x = 0; x < col; x++) {
+            printf("%d ", get(side, x, y));
+        }
+        printf("\n");
+    }
+}
+
+
+void Board::visualizeMoves(Side side) {
+    vector<Move> moves = getMoves(side);
+    Board *newboard = copy();
+    for (Move m: moves) {
+        newboard->doMove(&m, side);
+    }
+    newboard->printBoard(side);
 }
