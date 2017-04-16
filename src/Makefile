@@ -1,13 +1,21 @@
-CC=mpicc
+CC=mpicxx
+CFLAGS=-std=c++11 -Wall -g
 
-all: othellox
-parallel: othellox.c
-	$(CC) -Wall -o othellox othellox.c
-serial: othello.c
-	gcc -g -Wall -o othello othello.c
+TARGETS = othellox othellos
+OBJS = board.o
 
+all: $(TARGETS)
+
+board.o: board.cpp
+	$(CC) $(CFLAGS) -o $@ -c $^
+
+othellox: othellox.cpp $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $+
+
+othellos: othellos.cpp $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $+
 
 .PHONY: all clean
 
 clean:
-	rm -f *o othellox othello
+	rm -f *o $(TARGETS)
