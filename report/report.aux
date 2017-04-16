@@ -15,23 +15,89 @@
 \global\let\hyper@last\relax 
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand*\HyPL@Entry[1]{}
-\citation{elnaggar2014comparative}
 \HyPL@Entry{0<</S/D>>}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Research}{1}{section.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}A Comparative Study of Game Tree Searching Methods \cite  {elnaggar2014comparative}}{1}{subsection.1.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Introduction}{1}{section.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Problem Description}{1}{subsection.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Terminologies}{1}{subsection.2.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Minimax algorithm}{1}{subsection.2.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Evaluation functions}{1}{subsection.2.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Data Structures \& Algorithms}{1}{section.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Storage Techniques}{1}{subsection.3.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Search algorithm}{1}{subsection.3.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Sequential game tree search}{1}{section.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Minimax game tree search}{1}{subsection.2.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Minimax game tree. \href  {}{http://www.hamedahmadi.com/gametree/minimax6.png}\relax }}{1}{figure.caption.1}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:minimax}{{1}{1}{Minimax game tree. \href {}{http://www.hamedahmadi.com/gametree/minimax6.png}\relax }{figure.caption.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Negamax: simplified variant of minimax\relax }}{2}{figure.caption.2}}
+\newlabel{fig:negamax}{{2}{2}{Negamax: simplified variant of minimax\relax }{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Alpha-beta pruning}{2}{subsection.2.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Alpha-beta pruning: greyed out nodes are pruned\relax }}{2}{figure.caption.3}}
+\newlabel{fig:alphabeta}{{3}{2}{Alpha-beta pruning: greyed out nodes are pruned\relax }{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Alpha-beta enhancement}{2}{subsection.2.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Transposition table}{2}{subsubsection.2.3.1}}
+\citation{rasmussen2004parallel}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Killer heuristic}{3}{subsubsection.2.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Evaluation function}{3}{subsection.2.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Board representation}{3}{section.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.0.1}Bitboard}{3}{subsubsection.3.0.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Top: line propagation, Bot: legal moves\relax }}{4}{figure.caption.4}}
+\newlabel{fig:bitboard_legalmoves}{{4}{4}{Top: line propagation, Bot: legal moves\relax }{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.0.2}1D array}{4}{subsubsection.3.0.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Parallel Game Tree Search}{4}{section.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Naive Parallel Alpha-Beta}{4}{subsection.4.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Tree-decomposition models}{4}{subsubsection.4.1.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Even-split model for tree-decomposition\relax }}{4}{figure.caption.5}}
+\newlabel{fig:parallel_depth}{{5}{4}{Even-split model for tree-decomposition\relax }{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Evaluation}{5}{subsubsection.4.1.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Comparing traversal time for master-slave model and even-split model\relax }}{5}{figure.caption.6}}
+\newlabel{fig:traversal_model}{{6}{5}{Comparing traversal time for master-slave model and even-split model\relax }{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Comparing speedup for master-slave model and even-split model\relax }}{6}{figure.caption.7}}
+\newlabel{fig:speedup_model}{{7}{6}{Comparing speedup for master-slave model and even-split model\relax }{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Combining OpenMP \& MPI}{6}{subsection.4.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Overview}{6}{subsubsection.4.2.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Hybrid programming styles}{6}{subsubsection.4.2.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Hybrid programming styles\relax }}{7}{figure.caption.8}}
+\newlabel{fig:hybridstyles}{{8}{7}{Hybrid programming styles\relax }{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Benefits}{7}{subsubsection.4.2.3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.4}Evaluation}{8}{subsubsection.4.2.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Comparing speedup using hybrid approach and pure MPI approach\relax }}{8}{figure.caption.9}}
+\newlabel{fig:speedup_models}{{9}{8}{Comparing speedup using hybrid approach and pure MPI approach\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Communication/computation ratio: hybrid, pure MPI\relax }}{8}{figure.caption.10}}
+\newlabel{fig:communication_ratio}{{10}{8}{Communication/computation ratio: hybrid, pure MPI\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Benefit of hybrid programming approach\relax }}{9}{figure.caption.11}}
+\newlabel{fig:alltoall}{{11}{9}{Benefit of hybrid programming approach\relax }{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.5}Disadvantages}{9}{subsubsection.4.2.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}PVS (Principle Variation Split)}{9}{subsection.4.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces PV split using two processors\relax }}{9}{figure.caption.12}}
+\newlabel{fig:pvs}{{12}{9}{PV split using two processors\relax }{figure.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Speedup at depth 5\relax }}{10}{table.caption.13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Speedup vs processors at depth 5\relax }}{10}{figure.caption.14}}
+\newlabel{fig:speedup_processor}{{13}{10}{Speedup vs processors at depth 5\relax }{figure.caption.14}{}}
+\citation{knuth1975analysis}
+\citation{feldmann1993game}
+\citation{feldmann1993game}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}YBWC (Young Brother Wait Concept)}{11}{subsection.4.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Classification of nodes according to Knuth and Moore\relax }}{11}{figure.caption.15}}
+\newlabel{fig:classification_nodes}{{14}{11}{Classification of nodes according to Knuth and Moore\relax }{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Better load distribution strategy}{11}{subsection.4.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Tabulation of data}{12}{section.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Evaluation criteria for parallel algorithms}{12}{subsection.5.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Speedup vs depth of tree}{13}{subsection.5.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Speedup vs depth of tree for level 1 split\relax }}{13}{figure.caption.16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Per-processor elapsed time}{13}{subsection.5.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Time spent by each processor\relax }}{13}{figure.caption.17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Efficiency}{14}{subsection.5.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Efficiency of different algorithms\relax }}{14}{figure.caption.18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Performance of parallel algorithm}{14}{subsection.5.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces SPE(speedup), SO(search overhead), Processor work load(LD), Performance per processor(PER), average run time per problem\relax }}{14}{figure.caption.19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Comparing efficiency for master-slave model and even-split model\relax }}{15}{figure.caption.20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Nodes per second}{15}{subsection.5.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Nodes per second (speed) for different processors\relax }}{15}{figure.caption.21}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Board size vs depth}{15}{subsection.5.7}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Speedup for different board size and depth\relax }}{15}{table.caption.22}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Parallel performance of PV split}{16}{subsection.5.8}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Parallel performance measure of PV split\relax }}{16}{table.caption.23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Summary of different parallel algorithms\relax }}{16}{figure.caption.24}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{16}{section.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Split model}{16}{subsection.6.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Hybrid vs Pure MPI}{16}{subsection.6.2}}
 \bibstyle{acm}
 \bibdata{ref}
-\bibcite{elnaggar2014comparative}{1}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Techniques to improve serialized components}{2}{subsection.3.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Techniques to improve parallelization}{2}{subsection.3.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Tabulation of data}{2}{section.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Testing scalability of the algorithms}{2}{subsection.4.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{2}{section.5}}
+\bibcite{feldmann1993game}{1}
+\bibcite{knuth1975analysis}{2}
+\bibcite{rasmussen2004parallel}{3}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Comparison of parallel search}{17}{subsection.6.3}}

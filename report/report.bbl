@@ -1,8 +1,19 @@
 \begin{thebibliography}{1}
 
-\bibitem{elnaggar2014comparative}
-{\sc Elnaggar, A.~A., Abdel, M., Gadallah, M., and El-Deeb, H.}
-\newblock A comparative study of game tree searching methods.
-\newblock {\em Int. J. Adv. Comput. Sci. Appl. 5}, 5 (2014), 68--77.
+\bibitem{feldmann1993game}
+{\sc Feldmann, R.}
+\newblock {\em Game tree search on massively parallel systems}.
+\newblock PhD thesis, Citeseer, 1993.
+
+\bibitem{knuth1975analysis}
+{\sc Knuth, D.~E., and Moore, R.~W.}
+\newblock An analysis of alpha-beta pruning.
+\newblock {\em Artificial intelligence 6}, 4 (1975), 293--326.
+
+\bibitem{rasmussen2004parallel}
+{\sc Rasmussen, D.}
+\newblock Parallel chess searching and bitboards.
+\newblock Master's thesis, Technical University of Denmark, DTU, DK-2800 Kgs.
+  Lyngby, Denmark, 2004.
 
 \end{thebibliography}

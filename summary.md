@@ -17,7 +17,7 @@
 ## Parallel method
 1. PV Split, Dynamic multiple PV Split
 2. YWBC and Helpful Master
-3. Dynamic Tree Search
+3. Dynamic Tree Splitting
 4. Delayed Branched Tree Expansion
 5. Parallelized Best-first minimax
 
@@ -52,3 +52,6 @@
 ## Parallelization model
 1. SMP (Symmetric multiprocessing) involves a multiprocessor system with centralized shared memory
 2. Explore pure MPI or OpenMP + MPI
+
+## Design choices
+1. [Why 1D array over 2D array](http://stackoverflow.com/questions/17259877/1d-or-2d-array-whats-faster)
