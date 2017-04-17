@@ -1,27 +1,40 @@
 #include <chrono>
 #include <algorithm>
+#include <bits/stdc++.h>
+#include <unordered_map>
+#include <vector>
 
 #include "gametree.h"
 #include "utils.h"
 #include "common.h"
 
-GameTree::GameTree(Board *board, Side maximizer, int maxDepth, int maxNodes) {
+GameTree::GameTree(Board *board, Side maximizer,
+                   int maxDepth, int maxNodes, int timeout) {
     // this is our side
     this->maximizer = maximizer;
     this->maxDepth = maxDepth;
+    this->designatedDepth = maxDepth;
     this->maxNodes = maxNodes;
+    this->timeout = timeout * 1000; // Convert to milliseconds
+    this-> nodes = 0;
     root = new Node(NULL, maximizer == BLACK ? WHITE : BLACK, maximizer, board);
+
+    // Transposition table
+    zTable = initZobristTable(board->row, board->col, 2);
 }
 
 GameTree::~GameTree() {
     // free some stuff
+    delete zTable;
 }
 
 Move *GameTree::findBestMove(int depth, bool isMoveOrdered) {
-    auto startTime = chrono::high_resolution_clock::now(); 
     Board *board = root->getBoard();
+    // Assigned searched depth
+    designatedDepth = depth;
+    startTime = chrono::high_resolution_clock::now(); 
+
     vector<Move> moves = board->getMoves(maximizer);
-    //
     // Sort Moves according to evaluation score. Can be slow
     if (isMoveOrdered) {
         std::sort(moves.begin(), moves.end(), [&] (Move m1, Move m2)
@@ -38,6 +51,7 @@ Move *GameTree::findBestMove(int depth, bool isMoveOrdered) {
     }
 
     Node *best = NULL;
+
     for (int i = 0; i < moves.size(); i++) {
         Move *move = new Move(moves[i].getX(), moves[i].getY());
         Board *newBoard = board->copy();
@@ -57,26 +71,50 @@ Move *GameTree::findBestMove(int depth, bool isMoveOrdered) {
     }
 
     double elapsedTime = getElapsedTime(startTime);
-    printf("\nP:%s,D:%d,T:%f\n", maximizer == WHITE ? "White" : "Black", depth, elapsedTime);
-    for (Move m: moves) {
-        Board *b1 = board->copy();
-        b1->doMove(&m, maximizer);
-        int score = b1->getScore(maximizer);
-        printf("\n[%d,%d] = %d", m.getX(), m.getY(), score);
-    }
+
+    Move *chosenMove = best->getMove();
+
+    printf("Best moves: { %s }\n"
+           "Number of boards assessed: %d\n"
+           "Depth of boards: %d\n"
+           "Entire space: %s\n"
+           "Elapsed time in seconds: %f\n", chosenMove->getPos().c_str(),
+            nodes, depth, nodes == board->isDone() ? "true" : "false",
+            elapsedTime / 1000);
+    // printf("\nP:%s,D:%d,N:%d,T:%f,FULL: %s\n",
+    //     maximizer == WHITE ? "White" : "Black", depth, nodes,
+    //     elapsedTime, nodes == board->isDone() ? "true" : "false");
 
     return best->getMove();
 }
 
 void GameTree::search(Node *startingNode, int depth) {
     // Minimax search with alpha-beta pruning
+    this->nodes ++; // Increment node counter
+
+    if (getElapsedTime(startTime) > timeout) {
+        return;
+    }
 
     if (depth == 0) {
-        startingNode->setAlpha(startingNode->getBoard()->getScore(maximizer));
-        startingNode->setBeta(startingNode->getBoard()->getScore(maximizer));
+        int score = startingNode->getBoard()->getScore(maximizer);
+        startingNode->setAlpha(score);
+        startingNode->setBeta(score);
         return;
     }
     Board *board = startingNode->getBoard();
+
+    // Hash of current board configuration and check using transposition table
+    unsigned long long int boardHash = computeHash(board, zTable);
+
+    if (tt.find(boardHash)  != tt.end()) {
+        TableEntry *e = tt[boardHash];
+        if (e->depth > designatedDepth) {
+            startingNode->setAlpha(e->alpha);
+            startingNode->setBeta(e->beta);
+        }
+    }
+
     Side oppositeSide = startingNode->getSide() == BLACK ? WHITE : BLACK;
     vector<Move> moves = board->getMoves(oppositeSide);
     for (int i = 0; i < moves.size(); i++) {
@@ -93,10 +131,15 @@ void GameTree::search(Node *startingNode, int depth) {
         // search child
         search(child, depth - 1);
 
+        // MINIMAX PART
         if (startingNode->getSide() == maximizer) {
-            startingNode->setBeta(min(startingNode->getBeta(), child->getAlpha()));
+            int score = min(startingNode->getBeta(), child->getAlpha());
+            startingNode->setValue(score);
+            startingNode->setBeta(score);
         } else {
-            startingNode->setAlpha(max(startingNode->getAlpha(), child->getBeta()));
+            int score = max(startingNode->getAlpha(), child->getBeta());
+            startingNode->setValue(score);
+            startingNode->setAlpha(score);
         }
 
         delete child;
@@ -105,4 +148,8 @@ void GameTree::search(Node *startingNode, int depth) {
             return;
         }
     }
+
+    // Stores the best result in transposition table
+    tt[boardHash] = new TableEntry(startingNode->getMove(),
+        startingNode->getAlpha(), startingNode->getBeta(), depth);
 }

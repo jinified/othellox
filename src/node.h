@@ -15,6 +15,7 @@ private:
 	Side maximizer; 
 	int alpha;
 	int beta;
+    int v;
 	Node *parent;
 
 public:
@@ -28,8 +29,10 @@ public:
 	void setParent(Node *node);
 	int getAlpha();
 	int getBeta();
+    int getValue();
 	void setAlpha(int alpha);
 	void setBeta(int beta);
+	void setValue(int value);
 
 };
 

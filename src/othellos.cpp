@@ -70,28 +70,39 @@ EvalInfo *parse_evalparams(char *filename) {
     return info;
 }
 
-void simulate(int rounds, Board *board, int depth, int maxDepth, int maxNodes) {
-    // Simulate an othello game using our program for both players
+// Solver routine
 
-    printf("\nRunning simulation for %d rounds\n", rounds);
+vector<Move> iterativeDeepening(Side side, Board *board, int maxDepth, int maxNodes,
+                                int timeout) {
+    vector<Move> moves;
+    GameTree *tree = new GameTree(board->copy(), side, maxDepth, maxNodes, timeout);
+    for (int i=1; i < maxDepth; i++) {
+        Move *bestmove = tree->findBestMove(i, true);
+        moves.push_back(*bestmove);
+    }
+}
+
+void simulate(int rounds, Board *board, int depth, int maxDepth, int maxNodes,
+              int timeout) {
+    // Simulate an othello game using our program for both players
 
     for (int i=0; i < rounds; i++) {
         Move *bestmove;
         if (i % 2 == 0) {
             GameTree *tree = new GameTree(board->copy(), BLACK,
-                                          maxDepth, maxNodes);
+                                          maxDepth, maxNodes, timeout);
             bestmove = tree->findBestMove(depth, true);
             board->doMove(bestmove, BLACK);
         } else {
             GameTree *tree = new GameTree(board->copy(), WHITE,
-                                          maxDepth, maxNodes);
+                                          maxDepth, maxNodes, timeout);
             bestmove = tree->findBestMove(depth, true);
             board->doMove(bestmove, WHITE);
         }
     }
-
-    board->printBoard(BLACK);
 }
+
+// Main program
 
 int main(int argc, char **argv) {
 
@@ -102,13 +113,13 @@ int main(int argc, char **argv) {
         // Start timer
         auto start = chrono::high_resolution_clock::now(); 
 
-        arginfo(argv[1], argv[2]);
+        // arginfo(argv[1], argv[2]);
 
         // Parses config files
         GameInfo *game_info = parse_board(argv[1]);
-        game_info->printInfo();
+        // game_info->printInfo();
         EvalInfo *eval_info = parse_evalparams(argv[2]);
-        eval_info->printInfo();
+        // eval_info->printInfo();
 
         // Initialize board
         Board *board = new Board(game_info->row, game_info->col);
@@ -118,8 +129,16 @@ int main(int argc, char **argv) {
         board->corner_weight = eval_info->cornerValue;
         board->edge_weight = eval_info->edgeValue;
 
-        // Initialize simulator
-        simulate(10, board, 5, eval_info->maxDepth, eval_info->maxNodes);
+        // Solving code
+
+        GameTree *tree = new GameTree(board->copy(), game_info->maximizer,
+                                      eval_info->maxDepth, eval_info->maxNodes,
+                                      game_info->timeout);
+        Move *bestmove = tree->findBestMove(eval_info->maxDepth, true);
+        // Initialize simulator for testing
+        // simulate(10, board, 6, eval_info->maxDepth, eval_info->maxNodes, game_info->timeout);
+        // iterativeDeepening(BLACK, board, eval_info->maxDepth,
+        //                    eval_info->maxNodes, 30);
 
     }
     return 0;

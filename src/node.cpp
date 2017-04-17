@@ -7,6 +7,7 @@ Node::Node(Move *move, Side side, Side maximizer, Board *board) {
 	this->board = board;
 	this->alpha = -99999999;
 	this->beta = 99999999;
+    this->v = side == maximizer ? alpha : beta;
 }
 
 Node::~Node() {
@@ -34,12 +35,20 @@ void Node::setParent(Node *node) {
 	parent = node;
 }
 
+int Node::getValue() {
+    return v;
+}
+
 int Node::getAlpha() {
     return alpha;
 }
 
 int Node::getBeta() {
     return beta;
+}
+
+void Node::setValue(int v) {
+    this->v = v;
 }
 
 void Node::setAlpha(int alpha) {

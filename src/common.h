@@ -3,6 +3,7 @@
 
 #include <string>
 #include <string.h>
+#include <sstream>
 
 enum Side {
     BLACK, WHITE
@@ -15,6 +16,13 @@ public:
     Move(int x, int y) {
         this->x = x;
         this->y = y;
+    }
+
+    std::string getPos() {
+        char col = "abcdefghijklmnopqrstuvwxyz"[x-1];
+        std::stringstream ss;
+        ss << col << y;
+        return ss.str();
     }
 
     int getX() { return x; }
@@ -72,4 +80,22 @@ public:
                maxDepth, maxNodes, cornerValue, edgeValue);
     }
 };
+
+/*
+ * Transposition table entry
+ */
+class TableEntry {
+
+public:
+    int alpha, beta, depth;
+    Move *move;
+    TableEntry() {}
+    TableEntry(Move *move, int alpha, int beta, int depth) {
+        this->move = move;
+        this->alpha = alpha;
+        this->beta = beta;
+        this->depth = depth; // Depth of tree which gave this value
+    }
+};
+
 #endif
