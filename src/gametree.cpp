@@ -33,59 +33,58 @@ Move *GameTree::findBestMove(int depth, bool isMoveOrdered) {
     // Assigned searched depth
     designatedDepth = depth;
     startTime = chrono::high_resolution_clock::now(); 
-
     vector<Move> moves = board->getMoves(maximizer);
-    // Sort Moves according to evaluation score. Can be slow
-    if (isMoveOrdered) {
-        std::sort(moves.begin(), moves.end(), [&] (Move m1, Move m2)
-            {
-                Board *b1 = board->copy();
-                b1->doMove(&m1, maximizer);
-                Board *b2 = board->copy();
-                b2->doMove(&m2, maximizer);
-                int b1_score = b1->getScore(maximizer);
-                int b2_score = b2->getScore(maximizer);
-                return b1_score > b2_score;
-            }
-        );
-    }
+    Move *chosenMove = NULL;
 
-    Node *best = NULL;
-
-    for (int i = 0; i < moves.size(); i++) {
-        Move *move = new Move(moves[i].getX(), moves[i].getY());
-        Board *newBoard = board->copy();
-        newBoard->doMove(move, maximizer);
-        Node *child = new Node(move, maximizer, maximizer, newBoard);
-
-        // pass alpha and beta values down
-        child->setAlpha(root->getAlpha());
-        child->setBeta(root->getBeta());
-
-        // search child
-        search(child, depth - 1);
-
-        if (best == NULL || child->getBeta() > best->getBeta()) {
-            best = child;
+    if (!moves.empty()) {
+        // Sort Moves according to evaluation score. Can be slow
+        if (isMoveOrdered) {
+            std::sort(moves.begin(), moves.end(), [&] (Move m1, Move m2)
+                {
+                    Board *b1 = board->copy();
+                    b1->doMove(&m1, maximizer);
+                    Board *b2 = board->copy();
+                    b2->doMove(&m2, maximizer);
+                    int b1_score = b1->getScore(maximizer);
+                    int b2_score = b2->getScore(maximizer);
+                    return b1_score > b2_score;
+                }
+            );
         }
+
+        Node *best = NULL;
+
+        for (int i = 0; i < moves.size(); i++) {
+            Move *move = new Move(moves[i].getX(), moves[i].getY());
+            Board *newBoard = board->copy();
+            newBoard->doMove(move, maximizer);
+            Node *child = new Node(move, maximizer, maximizer, newBoard);
+
+            // pass alpha and beta values down
+            child->setAlpha(root->getAlpha());
+            child->setBeta(root->getBeta());
+
+            // search child
+            search(child, depth - 1);
+
+            if (best == NULL || child->getBeta() > best->getBeta()) {
+                best = child;
+            }
+        }
+        chosenMove = best->getMove();
     }
 
     double elapsedTime = getElapsedTime(startTime);
 
-    Move *chosenMove = best->getMove();
 
     printf("Best moves: { %s }\n"
            "Number of boards assessed: %d\n"
            "Depth of boards: %d\n"
            "Entire space: %s\n"
-           "Elapsed time in seconds: %f\n", chosenMove->getPos().c_str(),
+           "Elapsed time in seconds: %f\n", chosenMove != NULL ? chosenMove->getPos().c_str() : "n/a",
             nodes, depth, nodes == board->isDone() ? "true" : "false",
             elapsedTime / 1000);
-    // printf("\nP:%s,D:%d,N:%d,T:%f,FULL: %s\n",
-    //     maximizer == WHITE ? "White" : "Black", depth, nodes,
-    //     elapsedTime, nodes == board->isDone() ? "true" : "false");
-
-    return best->getMove();
+    return chosenMove;
 }
 
 void GameTree::search(Node *startingNode, int depth) {
