@@ -1,4 +1,5 @@
 #include <mpi.h>
+#include <omp.h>
 #include <string>
 #include <cstdio>
 #include <cstdlib>
@@ -14,10 +15,17 @@
 
 using namespace std;
 
-// MPI declarations
-int myrank;
-int name_len;
-char processor_name[MPI_MAX_PROCESSOR_NAME];
+// Global declarations
+
+Board *boards;
+Move *moves;
+int NPROC; // Number of processes allocated
+int MAX_DEPTH;
+int MAX_NODES;
+int TIMEOUT;
+Side maximizer;
+int numLeaves;
+int phase = 0;
 
 // Utilities
 
@@ -78,6 +86,17 @@ EvalInfo *parse_evalparams(char *filename) {
 
 // Solver routine
 
+int solveGameTree(Board *board, Side side, int depth, int maxNodes, int timeout) {
+    int score = -500;
+    GameTree *tree = new GameTree(board, side, depth, maxNodes, timeout);
+    Move *bestmove = tree->findBestMove(depth, true);
+    if (bestmove != NULL) {
+        board->doMove(bestmove, side);
+        score = board->getScore(side);
+    }
+    return score;
+}
+
 vector<Move> iterativeDeepening(Side side, Board *board, int maxDepth, int maxNodes,
                                 int timeout) {
     vector<Move> moves;
@@ -116,41 +135,43 @@ int main(int argc, char **argv) {
         usage();
         return EXIT_FAILURE;
     } else {
-        // Initialize the MPI environment
-        MPI_Init(NULL, NULL);
-        // Get rank of process
-        MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
-        // Get the name of the processor
-        MPI_Get_processor_name(processor_name, &name_len);
 
-        // Master process in charge of parsing
-        if (myrank == 0) {
+        // Initialize the MPI environment
+        int pid;
+        int seqDepth = 1;
+        MPI_Init(&argc, &argv);
+        MPI_Comm_rank(MPI_COMM_WORLD, &pid);
+        MPI_Comm_size(MPI_COMM_WORLD, &NPROC);
+
+        // Initialization of global variables
+        Board *board;
+        int myScore;
+
+
+        if (pid == 0) {
             // Parses config files
             GameInfo *game_info = parse_board(argv[1]);
-            // game_info->printInfo();
             EvalInfo *eval_info = parse_evalparams(argv[2]);
-            // eval_info->printInfo();
+            MAX_DEPTH = eval_info->maxDepth;
+            MAX_NODES = eval_info->maxNodes;
+            TIMEOUT = game_info->timeout;
 
             // Initialize board
-            Board *board = new Board(game_info->row, game_info->col);
+            board = new Board(game_info->row, game_info->col);
             board->setupBoard(game_info->white_pos, game_info->black_pos);
 
             // Initializes evaluation parameters
             board->corner_weight = eval_info->cornerValue;
             board->edge_weight = eval_info->edgeValue;
 
-            // Solving code
+            printf("=== START ===\n");
 
-            GameTree *tree = new GameTree(board->copy(), game_info->maximizer,
-                                          eval_info->maxDepth, eval_info->maxNodes,
-                                          game_info->timeout);
-            Move *bestmove = tree->findBestMove(eval_info->maxDepth, true);
-            // Initialize simulator for testing
-            // simulate(10, board, 6, eval_info->maxDepth, eval_info->maxNodes, game_info->timeout);
-            // iterativeDeepening(BLACK, board, eval_info->maxDepth,
-            //                    eval_info->maxNodes, 30);
-        } else {
-            printf("Hello from processor %s", processor_name);
+            // Solving code
+            solveGameTree(board, maximizer, MAX_DEPTH,  MAX_NODES, TIMEOUT);
+        }
+
+        if (pid == 0) {
+            printf("=== FINISH ===\n");
         }
     }
 	MPI_Finalize();
